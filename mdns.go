@@ -13,7 +13,7 @@ import (
 	clog "github.com/coredns/coredns/plugin/pkg/log"
 	"github.com/coredns/coredns/request"
 
-	"github.com/hashicorp/mdns"
+	"github.com/whyrusleeping/mdns"
 	"github.com/miekg/dns"
 	"golang.org/x/net/context"
 )

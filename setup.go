@@ -6,8 +6,9 @@ import (
 
 	"github.com/coredns/coredns/core/dnsserver"
 	"github.com/coredns/coredns/plugin"
+	clog "github.com/coredns/coredns/plugin/pkg/log"
 
-	"github.com/hashicorp/mdns"
+	"github.com/whyrusleeping/mdns"
 	"github.com/mholt/caddy"
 )
 
@@ -34,6 +35,10 @@ func setup(c *caddy.Controller) error {
 	m := MDNS{Domain: domain, mutex: &mutex, mdnsHosts: &mdnsHosts, srvHosts: &srvHosts}
 
 	c.OnStartup(func() error {
+		// mdns is quite noisy, and we don't really care about any of its messages
+		if ! clog.D {
+			mdns.DisableLogging = true
+		}
 		go browseLoop(&m)
 		return nil
 	})
